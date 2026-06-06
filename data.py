@@ -51,7 +51,7 @@ def extract_xsum_text(prompt_input):
     )
 
 
-def build_qa_judge_prompt(question_part, choice_str, none_label):
+def build_qa_assess_prompt(question_part, choice_str, none_label):
     return (
         "Task:\nSelect the one correct answer to the question from "
         "the choices provided. If none of the provided choices is "
@@ -62,7 +62,7 @@ def build_qa_judge_prompt(question_part, choice_str, none_label):
     )
 
 
-def build_xsum_judge_prompt(text_part, choice_str, none_label):
+def build_xsum_assess_prompt(text_part, choice_str, none_label):
     return (
         "Task:\nSelect the one correct summary for the text from the "
         "choices provided. If none of the provided choices is "

@@ -32,9 +32,9 @@ def main():
     scores = self_assessment.self_assess(
         generation_greedy,
         unique_set_choice,
-        judge_model=args.judge_model,
+        assess_model=args.assess_model,
         dataset=args.dataset,
-        judge_batch_size=args.judge_batch_size,
+        assess_batch_size=args.assess_batch_size,
         huggingface_token=args.huggingface_token,
     )
 
@@ -54,7 +54,7 @@ def parse_arguments():
         default="trivia_qa",
         choices=["nq", "trivia_qa", "xsum"],
     )
-    parser.add_argument("--judge_model", type=str, required=True)
+    parser.add_argument("--assess_model", type=str, required=True)
     parser.add_argument(
         "--nli_model", type=str, default="microsoft/deberta-large-mnli"
     )
@@ -64,7 +64,7 @@ def parse_arguments():
         default=None,
         help="access token for gated HuggingFace models",
     )
-    parser.add_argument("--judge_batch_size", type=int, default=64)
+    parser.add_argument("--assess_batch_size", type=int, default=64)
     parser.add_argument(
         "--nli_batch_size_per_gpu",
         type=int,

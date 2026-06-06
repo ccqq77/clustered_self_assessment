@@ -1,6 +1,8 @@
 # Clustered Self-Assessment (CSA)
 
-Code for the paper **Clustered Self-Assessment: A Simple yet Effective Method for Uncertainty Quantification in Large Language Models**, accepted to Findings of ACL 2026.
+Code for the ACL 2026 Findings paper
+**Clustered Self-Assessment: A Simple yet Effective Method for Uncertainty Quantification in Large Language Models**
+([arXiv:2606.03846](https://arxiv.org/abs/2606.03846)).
 
 CSA is a simple yet effective uncertainty quantification method for LLMs. It quantifies uncertainty by eliciting the model's self-assessment: sampled answers are clustered into the semantically distinct options of a multiple-choice question, and the probability the model assigns to its own answer serves as the confidence score.
 
@@ -51,9 +53,9 @@ python score.py \
     --greedy_dir ./output_greedy \
     --sample_dir ./output_sample \
     --dataset trivia_qa \
-    --judge_model Qwen/Qwen2.5-7B \
+    --assess_model Qwen/Qwen2.5-7B \
     --nli_model microsoft/deberta-large-mnli \
-    --judge_batch_size 64 \
+    --assess_batch_size 64 \
     --nli_batch_size_per_gpu 64 \
     --output_dir ./score
 ```
@@ -61,4 +63,18 @@ python score.py \
 This uses the greedy and sampled answers and runs the two-stage CSA procedure:
 
 - **Answer clustering.** For each question, the union of answers is grouped into semantically distinct clusters using bidirectional NLI predictions from `--nli_model` (default `microsoft/deberta-large-mnli`). Each cluster contributes one option, and a final "None of the above" option is appended.
-- **Self-assessment.** The resulting MCQ is presented to the original LLM (`--judge_model`), and the probability it assigns to the option corresponding to the greedy answer (label "A") is recorded as the confidence score.
+- **Self-assessment.** The resulting MCQ is presented to the original LLM (`--assess_model`), and the probability it assigns to the option corresponding to the greedy answer (label "A") is recorded as the confidence score.
+
+## Citation
+
+```bibtex
+@misc{cao2026clusteredselfassessmentsimpleeffective,
+      title={Clustered Self-Assessment: A Simple yet Effective Method for Uncertainty Quantification in Large Language Models},
+      author={Qi Cao and Takeshi Kojima and Andrew Gambardella and Helinyi Peng and Yutaka Matsuo and Yusuke Iwasawa},
+      year={2026},
+      eprint={2606.03846},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2606.03846},
+}
+```

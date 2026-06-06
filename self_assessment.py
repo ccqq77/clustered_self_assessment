@@ -40,13 +40,13 @@ def self_assess(
     generation_greedy,
     unique_set_choice,
     *,
-    judge_model: str,
+    assess_model: str,
     dataset: str,
-    judge_batch_size: int,
+    assess_batch_size: int,
     huggingface_token: str = None,
 ) -> List[float]:
     model = AutoModelForCausalLM.from_pretrained(
-        judge_model,
+        assess_model,
         device_map="balanced_low_0",
         torch_dtype="auto",
         attn_implementation="flash_attention_2",
@@ -54,7 +54,7 @@ def self_assess(
         token=huggingface_token,
     )
     tokenizer = AutoTokenizer.from_pretrained(
-        judge_model,
+        assess_model,
         padding_side="left",
         trust_remote_code=True,
         token=huggingface_token,
@@ -69,7 +69,7 @@ def self_assess(
         for c in unique_set_choice
     ]
 
-    judge_prompts = []
+    assess_prompts = []
     choice_tokens_valid = []
     for sample_idx, gen in enumerate(generation_greedy):
         if gen["output"][0].strip() == "":
@@ -79,24 +79,24 @@ def self_assess(
 
         if dataset == "xsum":
             text_part = data.extract_xsum_text(gen["input"])
-            prompt = data.build_xsum_judge_prompt(
+            prompt = data.build_xsum_assess_prompt(
                 text_part, choice_str, none_label
             )
         else:
             question_part = data.extract_question_part(gen["input"])
-            prompt = data.build_qa_judge_prompt(
+            prompt = data.build_qa_assess_prompt(
                 question_part, choice_str, none_label
             )
 
-        judge_prompts.append(prompt)
+        assess_prompts.append(prompt)
         choice_tokens_valid.append(choice_tokens_all[sample_idx])
 
     probs_list = []
     for start in tqdm(
-        range(0, len(judge_prompts), judge_batch_size), desc="judge forward"
+        range(0, len(assess_prompts), assess_batch_size), desc="assess forward"
     ):
-        batch = judge_prompts[start : start + judge_batch_size]
-        choice_tokens_slc = choice_tokens_valid[start : start + judge_batch_size]
+        batch = assess_prompts[start : start + assess_batch_size]
+        choice_tokens_slc = choice_tokens_valid[start : start + assess_batch_size]
 
         batch_token = tokenizer(batch, return_tensors="pt", padding=True).to(
             "cuda"
