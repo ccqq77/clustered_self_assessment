@@ -1,7 +1,7 @@
 # Clustered Self-Assessment (CSA)
 
 Code for the ACL 2026 Findings paper
-**Clustered Self-Assessment: A Simple yet Effective Method for Uncertainty Quantification in Large Language Models**
+[**Clustered Self-Assessment: A Simple yet Effective Method for Uncertainty Quantification in Large Language Models**](https://aclanthology.org/2026.findings-acl.1531/)
 ([arXiv:2606.03846](https://arxiv.org/abs/2606.03846)).
 
 CSA is a simple yet effective uncertainty quantification method for LLMs. It quantifies uncertainty by eliciting the model's self-assessment: sampled answers are clustered into the semantically distinct options of a multiple-choice question, and the probability the model assigns to its own answer serves as the confidence score.
@@ -68,13 +68,26 @@ This uses the greedy and sampled answers and runs the two-stage CSA procedure:
 ## Citation
 
 ```bibtex
-@misc{cao2026clusteredselfassessmentsimpleeffective,
-      title={Clustered Self-Assessment: A Simple yet Effective Method for Uncertainty Quantification in Large Language Models},
-      author={Qi Cao and Takeshi Kojima and Andrew Gambardella and Helinyi Peng and Yutaka Matsuo and Yusuke Iwasawa},
-      year={2026},
-      eprint={2606.03846},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2606.03846},
+@inproceedings{cao-etal-2026-clustered,
+    title = "Clustered Self-Assessment: A Simple yet Effective Method for Uncertainty Quantification in Large Language Models",
+    author = "Cao, Qi  and
+      Kojima, Takeshi  and
+      Gambardella, Andrew  and
+      Peng, Helinyi  and
+      Matsuo, Yutaka  and
+      Iwasawa, Yusuke",
+    editor = "Liakata, Maria  and
+      Moreira, Viviane P.  and
+      Zhang, Jiajun  and
+      Jurgens, David",
+    booktitle = "Findings of the {A}ssociation for {C}omputational {L}inguistics: {ACL} 2026",
+    month = jul,
+    year = "2026",
+    address = "San Diego, California, United States",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.findings-acl.1531/",
+    doi = "10.18653/v1/2026.findings-acl.1531",
+    pages = "30666--30680",
+    ISBN = "979-8-89176-395-1"
 }
 ```
